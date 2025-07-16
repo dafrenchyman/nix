@@ -124,9 +124,10 @@ in {
       virtualisation.docker.enable = true;
 
       # Enable PulseAudio
-      # sound.enable = true;
-      hardware.pulseaudio.enable = true;
-      hardware.pulseaudio.support32Bit = true;
+      services.pulseaudio = {
+        enable = true;
+        support32Bit = true;
+      };
 
       # Extra groups (not entirely sure this is needed)
       users.groups.ops.gid = 1000;

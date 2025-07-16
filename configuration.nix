@@ -44,7 +44,7 @@ in
     kubectl
 
     # Nix
-    nix
+    nix    
   ];
 
   # Default Boot options
@@ -71,6 +71,16 @@ in
     enable = lib.mkForce true;
     wantedBy = [ "getty.target" ]; # to start at boot
     serviceConfig.Restart = "always"; # restart when session is closed
+  };
+
+  # Setup nerd font
+  fonts = {
+    enableDefaultPackages = true;
+    fontconfig.enable = true;
+
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+    ];
   };
 
   virtualisation.docker.enable = true;

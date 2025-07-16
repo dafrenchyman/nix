@@ -43,12 +43,27 @@ in {
   # Everything that should be done when/if the service is enabled
   config = lib.mkIf cfg.enable {
 
+    # Backup existing dot files if they exist
+    home-manager.useUserPackages = true;
+    home-manager.backupFileExtension = "backup";
+
     home-manager.users.${cfg.username} = { pkgs, ... }: {
       home.packages = [ pkgs.atool pkgs.httpie ];
     
       # The state version is required and should stay at the version you
       # originally installed.
       home.stateVersion = "25.05";
+
+      # Set Vivaldi as the default browser
+      xdg.mimeApps = {
+        enable = true;
+        defaultApplications = {
+          "x-scheme-handler/http" = "vivaldi-stable.desktop";
+          "x-scheme-handler/https" = "vivaldi-stable.desktop";
+          "text/html" = "vivaldi-stable.desktop";
+          "application/xhtml+xml" = "vivaldi-stable.desktop";
+        };
+      };
 
       programs.fzf = {
         enable = true;

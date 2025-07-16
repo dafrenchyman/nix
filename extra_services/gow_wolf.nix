@@ -75,6 +75,7 @@ in {
       #######################################################
       # Required packages
       environment.systemPackages = with pkgs; [
+        curl
         docker
         docker-compose
       ];

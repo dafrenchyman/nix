@@ -175,9 +175,9 @@ in {
             fi
 
             echo "Building NVIDIA driver volume - Started"
-            curl https://raw.githubusercontent.com/games-on-whales/gow/master/images/nvidia-driver/Dockerfile \
-              | docker build -t gow/nvidia-driver:latest -f - --build-arg NV_VERSION=$(cat /sys/module/nvidia/version) .
-            docker create --rm --mount source=nvidia-driver-vol,destination=/usr/nvidia gow/nvidia-driver:latest sh
+            ${pkgs.curl}/bin/curl https://raw.githubusercontent.com/games-on-whales/gow/master/images/nvidia-driver/Dockerfile \
+              | ${pkgs.docker}/bin/docker build -t gow/nvidia-driver:latest -f - --build-arg NV_VERSION=$(cat /sys/module/nvidia/version) .
+            ${pkgs.docker}/bin/docker create --rm --mount source=nvidia-driver-vol,destination=/usr/nvidia gow/nvidia-driver:latest sh
 
             echo "Building NVIDIA driver volume - Finished"
             touch "$MARKER"

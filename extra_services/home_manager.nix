@@ -11,7 +11,7 @@ let
   # An object containing user configuration (in /etc/nixos/configuration.nix)
   cfg = config.extraServices.home_manager;
 
-  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz;
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
 
   homeManagerPath = builtins.fetchTarball {
     url = "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";

@@ -82,16 +82,20 @@ in {
       xorg.xauth
       vlc
 
-      # Development
+      # Development - pre-commit related
       alejandra
       detect-secrets
+      nodejs_24 # Needed by some pre-commit hooks
+      pre-commit
+      statix
+      deadnix
+
+      # Development
       dotnetCorePackages.dotnet_9.sdk
       gcc
       godot
       godot-mono
       libgcc
-      nodejs_24 # Needed by some pre-commit hooks
-      pre-commit
       python3
       python310
       python311

@@ -244,6 +244,9 @@ in {
   # Desktop apps
   extraServices.desktop_apps.enable = settings.desktop_apps_enable;
 
+  # Development apps
+  extraServices.development_apps.enable = settings.development_apps_enable;
+
   # Setup Glances
   extraServices.glances_with_prometheus.enable = settings.custom_glances_enable;
 

@@ -29,6 +29,9 @@ let
     # Desktop app
     desktop_apps_enable = false;
 
+    # Development apps
+    development_apps_enable = false;
+
     # Fileserver settings
     fileserver_enable = false;
     fileserver_username = "samba-user";

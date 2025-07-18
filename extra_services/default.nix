@@ -7,6 +7,7 @@
   imports = [
     ./cloud_init.nix
     ./desktop_apps.nix
+    ./development_apps.nix
     ./fileserver.nix
     ./glances_service.nix
     ./gpu.nix

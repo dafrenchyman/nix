@@ -71,8 +71,6 @@ in {
       # Image
       shotwell
 
-      nix
-
       # Audio
       plexamp
       pulseaudio
@@ -81,47 +79,6 @@ in {
       xorg.xinit
       xorg.xauth
       vlc
-
-      # Development - pre-commit related
-      alejandra
-      detect-secrets
-      nodejs_24 # Needed by some pre-commit hooks
-      pre-commit
-      statix
-      deadnix
-
-      # Development
-      dotnetCorePackages.dotnet_9.sdk
-      gcc
-      godot
-      godot-mono
-      libgcc
-      python3
-      python310
-      python311
-      python312
-      python313
-      jetbrains.pycharm-community-bin
-      stdenv.cc.cc.lib
-      (vscode-with-extensions.override {
-        vscodeExtensions = with vscode-extensions; [
-          esbenp.prettier-vscode
-          github.vscode-github-actions
-          hashicorp.terraform
-          jnoortheen.nix-ide
-          ms-azuretools.vscode-docker
-          ms-dotnettools.csdevkit
-          ms-dotnettools.csharp
-          ms-dotnettools.vscode-dotnet-runtime
-          ms-python.debugpy
-          ms-python.mypy-type-checker
-          ms-python.python
-          ms-python.vscode-pylance
-          ms-vscode-remote.remote-ssh
-          ms-vscode-remote.vscode-remote-extensionpack
-          streetsidesoftware.code-spell-checker
-        ];
-      })
     ];
 
     # Add thunar's bulk-rename utility to the desktop

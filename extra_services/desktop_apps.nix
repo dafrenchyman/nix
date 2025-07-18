@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 #############################
 # Enable Cloud-init
 #############################
-
 let
   # An object containing user configuration (in /etc/nixos/configuration.nix)
   cfg = config.extraServices.desktop_apps;
@@ -13,7 +16,6 @@ let
     url = "https://github.com/NixOS/nixpkgs/archive/0c19708cf035f50d28eb4b2b8e7a79d4dc52f6bb.tar.gz";
     sha256 = "0ngw2shvl24swam5pzhcs9hvbwrgzsbcdlhpvzqc7nfk8lc28sp3";
   }) {};
-
 in {
   # Create the main option to toggle the service state
   options.extraServices.desktop_apps = {
@@ -22,20 +24,18 @@ in {
 
   # Everything that should be done when/if the service is enabled
   config = lib.mkIf cfg.enable {
-
     # Packages
     environment.systemPackages = with pkgs; [
-
       # Core thumbnailers
-      gdk-pixbuf             # for basic image thumbnails
-      ffmpegthumbnailer      # for video thumbnails
+      gdk-pixbuf # for basic image thumbnails
+      ffmpegthumbnailer # for video thumbnails
       thud
-      xfce.tumbler           # generic thumbnail generator used by XFCE and MATE
+      xfce.tumbler # generic thumbnail generator used by XFCE and MATE
 
       # Optional thumbnail helpers
-      imagemagick            # general image processing
-      libopenraw             # raw image formats
-      poppler_utils          # PDF thumbnails (via `pdftoppm`)
+      imagemagick # general image processing
+      libopenraw # raw image formats
+      poppler_utils # PDF thumbnails (via `pdftoppm`)
 
       # Dropbox
       dropbox
@@ -65,31 +65,32 @@ in {
       gdm
       ghostty
       lastpass-cli
-      pulumi  # For deployments
+      pulumi # For deployments
       pulumiPackages.pulumi-python
-      
+
       # Image
       shotwell
-      
+
       nix
-      
+
       # Audio
       plexamp
       pulseaudio
-      
+
       # Desktop
       xorg.xinit
       xorg.xauth
       vlc
 
       # Development
+      alejandra
       detect-secrets
       dotnetCorePackages.dotnet_9.sdk
       gcc
       godot
       godot-mono
       libgcc
-      nodejs_24  # Needed by some pre-commit hooks
+      nodejs_24 # Needed by some pre-commit hooks
       pre-commit
       python3
       python310
@@ -136,9 +137,9 @@ in {
     programs.chromium = {
       enable = true;
       extensions = [
-        "hdokiejnpimakedhajhdlcegeplioahd"  # Lastpass
-        "imfcckkmcklambpijbgcebggegggkgla"  # Monarch
-        "aapbdbdomjkkjkaonfhkkikfgjllcleb"  # Google Translate
+        "hdokiejnpimakedhajhdlcegeplioahd" # Lastpass
+        "imfcckkmcklambpijbgcebggegggkgla" # Monarch
+        "aapbdbdomjkkjkaonfhkkikfgjllcleb" # Google Translate
       ];
     };
 
@@ -156,14 +157,14 @@ in {
     # Should probably make this a different module, but all of my stuff is headless
     services.xserver = {
       enable = true;
-      displayManager.lightdm.enable = true;  # Use LightDM (instead of GDM or SDDM)
-      desktopManager.mate.enable = true;    # Enable MATE desktop environment
+      displayManager.lightdm.enable = true; # Use LightDM (instead of GDM or SDDM)
+      desktopManager.mate.enable = true; # Enable MATE desktop environment
     };
 
     services.xrdp = {
       enable = true;
       audio.enable = true;
-      defaultWindowManager = "mate-session";  # Use MATE session as the default window manager
+      defaultWindowManager = "mate-session"; # Use MATE session as the default window manager
       openFirewall = true;
     };
 

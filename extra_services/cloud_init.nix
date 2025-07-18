@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 #############################
 # Enable Cloud-init
 #############################
-
 let
   # An object containing user configuration (in /etc/nixos/configuration.nix)
   cfg = config.extraServices.cloud_init;
@@ -27,7 +30,6 @@ in {
 
   # Everything that should be done when/if the service is enabled
   config = lib.mkIf cfg.enable {
-
     # #############################
     # # Cloud init
     # #############################
@@ -57,7 +59,7 @@ in {
           - set-passwords
           - ssh
         cloud_final_modules: []
-        '';
+      '';
     };
   };
 }

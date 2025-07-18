@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 #############################
 # Enable Home Manager
 #############################
-
 let
   # An object containing user configuration (in /etc/nixos/configuration.nix)
   cfg = config.extraServices.home_manager;
@@ -13,13 +16,11 @@ let
   homeManagerPath = builtins.fetchTarball {
     url = "https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz";
   };
-  
 in {
-
   imports = [
     (import "${homeManagerPath}/nixos")
   ];
-  
+
   options.extraServices.home_manager = {
     # Create the main option to toggle the service state
     enable = lib.mkEnableOption "home_manager";
@@ -42,14 +43,13 @@ in {
 
   # Everything that should be done when/if the service is enabled
   config = lib.mkIf cfg.enable {
-
     # Backup existing dot files if they exist
     home-manager.useUserPackages = true;
     home-manager.backupFileExtension = "backup";
 
-    home-manager.users.${cfg.username} = { pkgs, ... }: {
-      home.packages = [ pkgs.atool pkgs.httpie ];
-    
+    home-manager.users.${cfg.username} = {pkgs, ...}: {
+      home.packages = [pkgs.atool pkgs.httpie];
+
       # The state version is required and should stay at the version you
       # originally installed.
       home.stateVersion = "25.05";
@@ -71,7 +71,7 @@ in {
         enableZshIntegration = true;
         # tmux.enableShellIntegration = true;
         defaultOptions = [
-            "--no-mouse"
+          "--no-mouse"
         ];
       };
 
@@ -91,7 +91,7 @@ in {
         history.expireDuplicatesFirst = true;
         history.findNoDups = true;
         history.ignoreAllDups = true;
-        history.ignoreSpace = true;  # Do not enter command lines into the history list that start with a space
+        history.ignoreSpace = true; # Do not enter command lines into the history list that start with a space
 
         oh-my-zsh = {
           enable = true;
@@ -103,8 +103,8 @@ in {
             "npm"
             "node"
             "z"
-          ];  # Plugins to use
-          theme = "";  # disable oh-my-zsh prompt theme
+          ]; # Plugins to use
+          theme = ""; # disable oh-my-zsh prompt theme
         };
 
         initContent = ''
@@ -118,7 +118,6 @@ in {
           export OPENBLAS_NUM_THREADS=1
 
         '';
-
       };
 
       programs.tmux = {
@@ -139,7 +138,6 @@ in {
         enableZshIntegration = true;
         enableBashIntegration = false;
         useTheme = "powerlevel10k_rainbow";
-
       };
 
       programs.autojump = {
@@ -147,7 +145,6 @@ in {
         enableZshIntegration = true;
         enableBashIntegration = false;
       };
-
     };
   };
 }

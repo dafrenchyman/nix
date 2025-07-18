@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 #############################
 # Enable GPU
 #############################
-
 let
   # An object containing user configuration (in /etc/nixos/configuration.nix)
   cfg = config.extraServices.gpu;
@@ -13,7 +16,7 @@ in {
     enable = lib.mkEnableOption "gpu";
 
     gpu_type = lib.mkOption {
-      type = lib.types.enum [ "amd" "nvidia" ];
+      type = lib.types.enum ["amd" "nvidia"];
       default = "amd";
       description = "Select which GPU type to configure.";
     };
@@ -21,9 +24,9 @@ in {
 
   # Everything that should be done when/if the service is enabled
   config = lib.mkIf cfg.enable {
-    boot.initrd.kernelModules = [ "amdgpu" ];
+    boot.initrd.kernelModules = ["amdgpu"];
     #boot.kernelModules = [ "amdgpu" ];
-    boot.initrd.availableKernelModules = [ "amdgpu" ];
+    boot.initrd.availableKernelModules = ["amdgpu"];
 
     # Doesn't work
     #boot.initrd.includeFirmware = true;
@@ -55,13 +58,13 @@ in {
     ];
 
     services.xserver.enable = true;
-    services.xserver.videoDrivers = [ "amdgpu" ];
+    services.xserver.videoDrivers = ["amdgpu"];
 
     hardware.graphics = {
       enable = true;
       #driSupport = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
+      extraPackages = with pkgs; [vaapiVdpau libvdpau-va-gl];
     };
 
     # hardware.firmware = [

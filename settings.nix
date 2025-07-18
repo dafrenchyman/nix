@@ -1,10 +1,9 @@
 let
   # Load the JSON file only if it exists
   settingsFile =
-    if builtins.pathExists "/etc/nixos/settings.json" then
-      builtins.fromJSON (builtins.readFile (toString /etc/nixos/settings.json))
-    else
-      {};
+    if builtins.pathExists "/etc/nixos/settings.json"
+    then builtins.fromJSON (builtins.readFile (toString /etc/nixos/settings.json))
+    else {};
 
   # Default values
   defaultSettings = {
@@ -67,5 +66,5 @@ let
 
   # Merge attrsets; right-hand wins (overrides)
   settings = defaultSettings // settingsFile;
-
-in settings
+in
+  settings

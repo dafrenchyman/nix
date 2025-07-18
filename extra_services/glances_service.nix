@@ -1,16 +1,16 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   # The package itself. It resolves to the package installation directory.
   glances_with_prometheus = pkgs.callPackage ./glances_default.nix {};
 
   # An object containing user configuration (in /etc/nixos/configuration.nix)
   cfg = config.extraServices.glances_with_prometheus;
-
 in {
-
   options.extraServices.glances_with_prometheus = {
-
     # Create the main option to toggle the service state
     enable = lib.mkEnableOption "glances_with_prometheus";
 
@@ -31,12 +31,12 @@ in {
     # Open selected port in the firewall.
     # We can reference the port that the user configured.
     networking.firewall.allowedTCPPorts = [
-      cfg.port  # Glances prometheus port
+      cfg.port # Glances prometheus port
       61208 # Glances
     ];
 
     networking.firewall.allowedUDPPorts = [
-      cfg.port  # Glances prometheus port
+      cfg.port # Glances prometheus port
       61208 # Glances
     ];
 
@@ -66,9 +66,9 @@ in {
       serviceConfig = {
         ExecStart = "${glances_with_prometheus}/bin/glances -q --export prometheus";
         Restart = "on-abort";
-        RemainAfterExit ="yes";
+        RemainAfterExit = "yes";
       };
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
     };
   };
 }

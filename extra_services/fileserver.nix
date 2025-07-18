@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }:
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 #############################
 # Setup samba server
 #############################
@@ -7,7 +11,6 @@
 #  https://nixos.wiki/wiki/Samba
 #  https://sourcegraph.com/github.com/Icy-Thought/snowflake/-/blob/modules/networking/samba.nix
 #  https://sourcegraph.com/github.com/wkennington/nixos/-/blob/nas/samba.nix
-
 let
   # An object containing user configuration (in /etc/nixos/configuration.nix)
   cfg = config.extraServices.fileserver;
@@ -32,7 +35,6 @@ in {
       default = "192.168.1. 192.168.10. 192.168.100. 127.0.0.1 localhost";
       example = "192.168.1. 192.168.10. 192.168.100. 127.0.0.1 localhost";
     };
-
   };
 
   # Everything that should be done when/if the service is enabled
@@ -89,7 +91,7 @@ in {
       home = "/var/empty";
       createHome = false;
       shell = pkgs.shadow;
-      uid = 2000;  # Specify the desired UID for the user
+      uid = 2000; # Specify the desired UID for the user
     };
 
     # Create service
@@ -144,12 +146,12 @@ in {
     system.activationScripts = {
       sambaUserSetup = {
         text = ''
-           PATH=$PATH:${lib.makeBinPath [ pkgs.samba ]}
-           export PASS="${cfg.password}"
-           export LOGIN="${cfg.username}"
-           echo -ne "$PASS\n$PASS\n" | smbpasswd -a -s $LOGIN
-            '';
-        deps = [ ];
+          PATH=$PATH:${lib.makeBinPath [pkgs.samba]}
+          export PASS="${cfg.password}"
+          export LOGIN="${cfg.username}"
+          echo -ne "$PASS\n$PASS\n" | smbpasswd -a -s $LOGIN
+        '';
+        deps = [];
       };
     };
 
@@ -163,7 +165,6 @@ in {
       /mnt/Bank/SnapArrays 192.168.10.0/24(rw,sync,no_subtree_check,anonuid=1000,anongid=1000,no_root_squash)
     '';
 
-    networking.firewall.allowedTCPPorts = [ 2049 ];
-
+    networking.firewall.allowedTCPPorts = [2049];
   };
 }

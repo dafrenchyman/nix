@@ -9,3 +9,8 @@ repos:
       - id: detect-secrets
         language: system
         args: ["--baseline", ".secrets.baseline"]
+  - repo: https://github.com/kamadorueda/alejandra
+    rev: 4.0.0
+    hooks:
+      - id: alejandra
+        language: system

@@ -1,19 +1,20 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   # Load the settings from the secrets file
   settings = import ./settings.nix;
 
   # Check if an extra username has been setup
   hasValidUser = settings.username != "" && settings.password != "";
-
-in
-{
+in {
   # Import the qemu-guest.nix file from the nixpkgs repository on GitHub
   #   https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/profiles/qemu-guest.nixC
   imports = [
     # arion.nixosModules.arion
-    
+
     # "${builtins.fetchTarball "https://github.com/hercules-ci/arion/archive/refs/tags/v0.2.1.0.tar.gz"}/nixos-module.nix"
     "${builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/master.tar.gz"}/nixos/modules/profiles/qemu-guest.nix"
     ./hardware-configuration.nix
@@ -25,26 +26,25 @@ in
 
   # Packages
   environment.systemPackages = with pkgs; [
-  
     # Terminal Tools
     bat
     git
     nano
     par2cmdline
-    pciutils  # For lspci - Since this is a VM we might pass PCI devices to, this helps troubleshoot that
+    pciutils # For lspci - Since this is a VM we might pass PCI devices to, this helps troubleshoot that
     tmux
     tree
     unrar
     unzip
     wget
-    
+
     # Docker
     docker
     docker-compose
     kubectl
 
     # Nix
-    nix    
+    nix
   ];
 
   # Default Boot options
@@ -69,7 +69,7 @@ in
   # Get serial console working (not sure this is still needed)
   systemd.services."getty@tty1" = {
     enable = lib.mkForce true;
-    wantedBy = [ "getty.target" ]; # to start at boot
+    wantedBy = ["getty.target"]; # to start at boot
     serviceConfig.Restart = "always"; # restart when session is closed
   };
 
@@ -98,7 +98,7 @@ in
 
   # Setup ops group
   users.groups.ops = {
-    gid = 1000;  # Set the gid
+    gid = 1000; # Set the gid
   };
 
   users.users = lib.mkMerge [
@@ -106,22 +106,22 @@ in
       # Setup ops user for ssh'ing into the box
       ops = {
         isNormalUser = true;
-        uid = 1000;  # Set the uid
-        group = "ops";  # Primary group for the user
+        uid = 1000; # Set the uid
+        group = "ops"; # Primary group for the user
         extraGroups = [
           "wheel"
         ];
-        home = "/home/ops";  # Ensure the home directory is set
+        home = "/home/ops"; # Ensure the home directory is set
       };
     }
 
     # Generate the extra username configured
     (lib.mkIf hasValidUser (
-      lib.genAttrs [ settings.username ] (_: {
+      lib.genAttrs [settings.username] (_: {
         isNormalUser = true;
         createHome = true;
         group = "ops";
-        extraGroups = [ "wheel" ];
+        extraGroups = ["wheel"];
         shell = pkgs.zsh;
         password = settings.password;
         home = "/home/${settings.username}";
@@ -284,5 +284,4 @@ in
     nameserver_ip = settings.kube_resolv_conf_nameserver;
     api_server_port = settings.kube_master_api_server_port;
   };
-
 }

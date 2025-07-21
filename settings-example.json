@@ -12,6 +12,8 @@
   "cloud_init_password": "",
   "custom_glances_enable": false,
   "desktop_apps_enable": false,
+  "development_apps_enable": false,
+  "development_apps_username": "",
   "fileserver_enable": false,
   "fileserver_username": "",
   "fileserver_password": "",

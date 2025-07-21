@@ -31,6 +31,7 @@ let
 
     # Development apps
     development_apps_enable = false;
+    development_apps_username = "";
 
     # Fileserver settings
     fileserver_enable = false;

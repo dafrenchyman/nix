@@ -7,6 +7,13 @@
   # Load the settings from the secrets file
   settings = import ./settings.nix;
 
+  # 25.05.806427.32a4e8794210 (Warbler)
+  # https://github.com/NixOS/nixpkgs/commit/a59eb7800787c926045d51b70982ae285faa2346
+  # sudo nix-channel --remove nixpkgs
+  # sudo nix-channel --add https://github.com/NixOS/nixpkgs/archive/a59eb7800787c926045d51b70982ae285faa2346.tar.gz nixpkgs
+  # sudo nix-channel --update
+  # sudo nixos-rebuild switch
+
   # Check if an extra username has been setup
   hasValidUser = settings.username != "" && settings.password != "";
 in {
@@ -46,6 +53,8 @@ in {
     # Nix
     nix
   ];
+
+  environment.variables.FORCE_REBUILD = "1";
 
   # Default Boot options
   fileSystems."/" = {
@@ -246,6 +255,7 @@ in {
 
   # Development apps
   extraServices.development_apps.enable = settings.development_apps_enable;
+  extraServices.development_apps.username = settings.development_apps_username;
 
   # Setup Glances
   extraServices.glances_with_prometheus.enable = settings.custom_glances_enable;

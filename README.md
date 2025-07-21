@@ -9,6 +9,7 @@ Custom modules setup:
 - `cloud_init.nix`: Helper to make it easier to setup cloud-init (so you can setup SSH keys and such through proxmox).
   - You'll need to install a cloud-init setup nixos installation for this to take effect on first boot. **Probably** fine...
 - `gow_wolf.nix`: Helper to make it easy to setup [GOW Wolf](https://games-on-whales.github.io/wolf/stable/index.html)
+  - Nvidia option is untested.
 - `gpu.nix`: Helper to make it easy to setup a GPU (currently only does AMD)
 
 NOTES:
